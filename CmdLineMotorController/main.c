@@ -25,6 +25,12 @@ uint32_t ui32PulseCounter2;
 bool bFreeMotion2;
 uint32_t ui32PulseCounter3;
 bool bFreeMotion3;
+uint32_t ui32PulseCounter4;
+bool bFreeMotion4;
+uint32_t ui32PulseCounter5;
+bool bFreeMotion5;
+uint32_t ui32PulseCounter6;
+bool bFreeMotion6;
 
 int CMD_Joint1Start (int argc, char *argv[]) {
 	bFreeMotion1 = true;
@@ -74,7 +80,9 @@ int CMD_Joint1 (int argc, char *argv[]) {
         ui32Frequency = ustrtoul(argv[1], 0, 10);
         ui32Direction = ustrtoul(argv[2], 0, 10);
         ui32Pulses = ustrtoul(argv[3], 0, 10);
+
         ui32PulseCounter1 = ui32Pulses*2;
+
         bFreeMotion1 = false;
 
         ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
@@ -135,7 +143,9 @@ int CMD_Joint2 (int argc, char *argv[]) {
         ui32Frequency = ustrtoul(argv[1], 0, 10);
         ui32Direction = ustrtoul(argv[2], 0, 10);
         ui32Pulses = ustrtoul(argv[3], 0, 10);
+
         ui32PulseCounter2 = ui32Pulses*2;
+
         bFreeMotion2 = false;
 
         ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
@@ -196,7 +206,9 @@ int CMD_Joint3 (int argc, char *argv[]) {
         ui32Frequency = ustrtoul(argv[1], 0, 10);
         ui32Direction = ustrtoul(argv[2], 0, 10);
         ui32Pulses = ustrtoul(argv[3], 0, 10);
+
         ui32PulseCounter3 = ui32Pulses*2;
+
         bFreeMotion3 = false;
 
         ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
@@ -205,6 +217,195 @@ int CMD_Joint3 (int argc, char *argv[]) {
         GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_2, ui32Direction << 2);
 
         TimerEnable(TIMER2_BASE, TIMER_A);
+    }
+	return(0);
+}
+
+int CMD_Joint4Start (int argc, char *argv[]) {
+	bFreeMotion4 = true;
+	TimerEnable(TIMER3_BASE, TIMER_A);
+	return(0);
+}
+
+int CMD_Joint4Stop (int argc, char *argv[]) {
+	TimerDisable(TIMER3_BASE, TIMER_A);
+	return(0);
+}
+
+int CMD_Joint4Freq (int argc, char *argv[]) {
+	uint32_t ui32Frequency;
+	uint32_t ui32Period;
+
+    if(argc == 2)
+    {
+        ui32Frequency = ustrtoul(argv[1], 0, 10);
+
+        ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
+        TimerLoadSet(TIMER3_BASE, TIMER_A, ui32Period-1);
+    }
+	return(0);
+}
+
+int CMD_Joint4Dir (int argc, char *argv[]) {
+	uint32_t ui32Direction;
+
+    if(argc == 2)
+    {
+        ui32Direction = ustrtoul(argv[1], 0, 10);
+
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_3, ui32Direction << 3);
+    }
+	return(0);
+}
+
+int CMD_Joint4 (int argc, char *argv[]) {
+	uint32_t ui32Frequency;
+	uint32_t ui32Direction;
+	uint32_t ui32Pulses;
+	uint32_t ui32Period;
+
+    if(argc == 4)
+    {
+        ui32Frequency = ustrtoul(argv[1], 0, 10);
+        ui32Direction = ustrtoul(argv[2], 0, 10);
+        ui32Pulses = ustrtoul(argv[3], 0, 10);
+
+        ui32PulseCounter4 = ui32Pulses*2;
+
+        bFreeMotion4 = false;
+
+        ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
+        TimerLoadSet(TIMER3_BASE, TIMER_A, ui32Period-1);
+
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_3, ui32Direction << 3);
+
+        TimerEnable(TIMER3_BASE, TIMER_A);
+    }
+	return(0);
+}
+
+int CMD_Joint5Start (int argc, char *argv[]) {
+	bFreeMotion5 = true;
+	TimerEnable(TIMER4_BASE, TIMER_A);
+	return(0);
+}
+
+int CMD_Joint5Stop (int argc, char *argv[]) {
+	TimerDisable(TIMER4_BASE, TIMER_A);
+	return(0);
+}
+
+int CMD_Joint5Freq (int argc, char *argv[]) {
+	uint32_t ui32Frequency;
+	uint32_t ui32Period;
+
+    if(argc == 2)
+    {
+        ui32Frequency = ustrtoul(argv[1], 0, 10);
+
+        ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
+        TimerLoadSet(TIMER4_BASE, TIMER_A, ui32Period-1);
+    }
+	return(0);
+}
+
+int CMD_Joint5Dir (int argc, char *argv[]) {
+	uint32_t ui32Direction;
+
+    if(argc == 2)
+    {
+        ui32Direction = ustrtoul(argv[1], 0, 10);
+
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_6, ui32Direction << 6);
+    }
+	return(0);
+}
+
+int CMD_Joint5 (int argc, char *argv[]) {
+	uint32_t ui32Frequency;
+	uint32_t ui32Direction;
+	uint32_t ui32Pulses;
+	uint32_t ui32Period;
+
+    if(argc == 4)
+    {
+        ui32Frequency = ustrtoul(argv[1], 0, 10);
+        ui32Direction = ustrtoul(argv[2], 0, 10);
+        ui32Pulses = ustrtoul(argv[3], 0, 10);
+
+        ui32PulseCounter5 = ui32Pulses*2;
+
+        bFreeMotion5 = false;
+
+        ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
+        TimerLoadSet(TIMER4_BASE, TIMER_A, ui32Period-1);
+
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_6, ui32Direction << 6);
+
+        TimerEnable(TIMER4_BASE, TIMER_A);
+    }
+	return(0);
+}
+
+int CMD_Joint6Start (int argc, char *argv[]) {
+	bFreeMotion6 = true;
+	TimerEnable(TIMER5_BASE, TIMER_A);
+	return(0);
+}
+
+int CMD_Joint6Stop (int argc, char *argv[]) {
+	TimerDisable(TIMER5_BASE, TIMER_A);
+	return(0);
+}
+
+int CMD_Joint6Freq (int argc, char *argv[]) {
+	uint32_t ui32Frequency;
+	uint32_t ui32Period;
+
+    if(argc == 2)
+    {
+        ui32Frequency = ustrtoul(argv[1], 0, 10);
+
+        ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
+        TimerLoadSet(TIMER6_BASE, TIMER_A, ui32Period-1);
+    }
+	return(0);
+}
+
+int CMD_Joint6Dir (int argc, char *argv[]) {
+	uint32_t ui32Direction;
+
+    if(argc == 2)
+    {
+        ui32Direction = ustrtoul(argv[1], 0, 10);
+
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_7, ui32Direction << 7);
+    }
+	return(0);
+}
+
+int CMD_Joint6 (int argc, char *argv[]) {
+	uint32_t ui32Frequency;
+	uint32_t ui32Direction;
+	uint32_t ui32Pulses;
+	uint32_t ui32Period;
+
+    if(argc == 4)
+    {
+        ui32Frequency = ustrtoul(argv[1], 0, 10);
+        ui32Direction = ustrtoul(argv[2], 0, 10);
+        ui32Pulses = ustrtoul(argv[3], 0, 10);
+
+        ui32PulseCounter6 = ui32Pulses*2;
+
+        bFreeMotion6 = false;
+
+        ui32Period=(SysCtlClockGet()/ui32Frequency)/2;
+        TimerLoadSet(TIMER5_BASE, TIMER_A, ui32Period-1);
+
+        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_7, ui32Direction << 7);
+
+        TimerEnable(TIMER5_BASE, TIMER_A);
     }
 	return(0);
 }
@@ -247,6 +448,21 @@ tCmdLineEntry g_psCmdTable[]= {
 	{"joint3_freq",		CMD_Joint3Freq,		" : Joint 3 frequency"},
 	{"joint3_dir",		CMD_Joint3Dir,		" : Joint 3 direction"},
 	{"joint3",			CMD_Joint3,			" : Joint 3 move setup 'freq dir pulses'"},
+	{"joint4_start",	CMD_Joint4Start,	" : Joint 1 start"},
+	{"joint4_stop",		CMD_Joint4Stop,		" : Joint 4 emergency stop"},
+	{"joint4_freq",		CMD_Joint4Freq,		" : Joint 4 frequency"},
+	{"joint4_dir",		CMD_Joint4Dir,		" : Joint 4 direction"},
+	{"joint4",			CMD_Joint4,			" : Joint 4 move setup 'freq dir pulses'"},
+	{"joint5_start",	CMD_Joint5Start,	" : Joint 5 start"},
+	{"joint5_stop",		CMD_Joint5Stop,		" : Joint 5 emergency stop"},
+	{"joint5_freq",		CMD_Joint5Freq,		" : Joint 5 frequency"},
+	{"joint5_dir",		CMD_Joint5Dir,		" : Joint 5 direction"},
+	{"joint5",			CMD_Joint5,			" : Joint 5 move setup 'freq dir pulses'"},
+	{"joint6_start",	CMD_Joint6Start,	" : Joint 6 start"},
+	{"joint6_stop",		CMD_Joint6Stop,		" : Joint 6 emergency stop"},
+	{"joint6_freq",		CMD_Joint6Freq,		" : Joint 6 frequency"},
+	{"joint6_dir",		CMD_Joint6Dir,		" : Joint 6 direction"},
+	{"joint6",			CMD_Joint6,			" : Joint 6 move setup 'freq dir pulses'"},
 	{"help",			CMD_Help,			" : Aplication Help"},
 	{0, 0, 0}
 };
@@ -263,10 +479,15 @@ void main(void) {
 	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
 	GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0);
 
+	//portc setup
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+	GPIOPinTypeGPIOOutput(GPIO_PORTC_BASE, GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7);
+	GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, 0);
+
 	//portd setup
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-	GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2);
-	GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2, 0);
+	GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_6|GPIO_PIN_7);
+	GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_6|GPIO_PIN_7, 0);
 
 	//timer 0 setup
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
@@ -277,19 +498,37 @@ void main(void) {
 	//timer 2 setup
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
 	TimerConfigure(TIMER2_BASE, TIMER_CFG_PERIODIC);
+	//timer 3 setup
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER3);
+	TimerConfigure(TIMER3_BASE, TIMER_CFG_PERIODIC);
+	//timer 4 setup
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER4);
+	TimerConfigure(TIMER4_BASE, TIMER_CFG_PERIODIC);
+	//timer 5 setup
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER5);
+	TimerConfigure(TIMER5_BASE, TIMER_CFG_PERIODIC);
 	
 	ui32Period=(SysCtlClockGet()/5)/2;
 	TimerLoadSet(TIMER0_BASE, TIMER_A, ui32Period-1);
 	TimerLoadSet(TIMER1_BASE, TIMER_A, ui32Period-1);
 	TimerLoadSet(TIMER2_BASE, TIMER_A, ui32Period-1);
+	TimerLoadSet(TIMER3_BASE, TIMER_A, ui32Period-1);
+	TimerLoadSet(TIMER4_BASE, TIMER_A, ui32Period-1);
+	TimerLoadSet(TIMER5_BASE, TIMER_A, ui32Period-1);
 
 	//interrupts enable
 	IntEnable(INT_TIMER0A);
 	IntEnable(INT_TIMER1A);
 	IntEnable(INT_TIMER2A);
+	IntEnable(INT_TIMER3A);
+	IntEnable(INT_TIMER4A);
+	IntEnable(INT_TIMER5A);
 	TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 	TimerIntEnable(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 	TimerIntEnable(TIMER2_BASE, TIMER_TIMA_TIMEOUT);
+	TimerIntEnable(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
+	TimerIntEnable(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+	TimerIntEnable(TIMER5_BASE, TIMER_TIMA_TIMEOUT);
 	IntMasterEnable();
 
     //UART setup
@@ -371,5 +610,47 @@ void Timer2IntHandler(void) {
 	if (!bFreeMotion3) {
 		ui32PulseCounter3--;
 		if (ui32PulseCounter3 == 0) TimerDisable(TIMER2_BASE, TIMER_A);
+	}
+}
+
+void Timer3IntHandler(void) {
+	//clear the timer interrupt
+	TimerIntClear(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
+
+	//Generate the pulses
+	if (GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_5)) GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 0);
+	else GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5, 32);
+
+	if (!bFreeMotion4) {
+		ui32PulseCounter4--;
+		if (ui32PulseCounter4 == 0) TimerDisable(TIMER3_BASE, TIMER_A);
+	}
+}
+
+void Timer4IntHandler(void) {
+	//clear the timer interrupt
+	TimerIntClear(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+
+	//Generate the pulses
+	if (GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_6)) GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 0);
+	else GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_6, 64);
+
+	if (!bFreeMotion5) {
+		ui32PulseCounter5--;
+		if (ui32PulseCounter5 == 0) TimerDisable(TIMER4_BASE, TIMER_A);
+	}
+}
+
+void Timer5IntHandler(void) {
+	//clear the timer interrupt
+	TimerIntClear(TIMER5_BASE, TIMER_TIMA_TIMEOUT);
+
+	//Generate the pulses
+	if (GPIOPinRead(GPIO_PORTC_BASE, GPIO_PIN_7)) GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_7, 0);
+	else GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_7, 128);
+
+	if (!bFreeMotion6) {
+		ui32PulseCounter6--;
+		if (ui32PulseCounter6 == 0) TimerDisable(TIMER5_BASE, TIMER_A);
 	}
 }
